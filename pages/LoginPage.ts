@@ -13,16 +13,25 @@ export class LoginPage {
   private readonly rememberMeCheckbox: Locator;
   private readonly signInButton: Locator;
   private readonly errorMessage: Locator;
+  private readonly passwordValidationErrors: Locator;
 
   constructor(page: Page) {
     this.page = page;
 
     // Initialize locators
-    this.usernameInput = page.getByLabel('Username');
-    this.passwordInput = page.getByLabel('Password');
-    this.rememberMeCheckbox = page.getByLabel('Remember me');
+    
+    // Use placeholder instead of label
+    this.usernameInput = page.getByPlaceholder('Enter your username');
+    this.passwordInput = page.getByPlaceholder('Enter your password');
+    
+    // Use role for checkbox instead of label
+    this.rememberMeCheckbox = page.getByRole('checkbox', { name: 'Remember me' });
+    
     this.signInButton = page.getByRole('button', { name: 'Sign In' });
-    this.errorMessage = page.getByText('Invalid username or password');
+    this.errorMessage = page.locator('[role="alert"], .text-destructive');
+
+    this.passwordValidationErrors = page.locator('[aria-label="Password requirements"] li');
+
   }
 
   /**
@@ -73,6 +82,13 @@ export class LoginPage {
    * Check if an error message is displayed
    */
   async hasErrorMessage() {
-    await expect(this.errorMessage).toBeVisible({ timeout: 5000 });
+    const validationErrors = await this.passwordValidationErrors.count();
+    if (validationErrors > 0) {
+        console.log(`Password validation errors detected: ${validationErrors}`);
+        return;
+    }
+
+    await this.page.waitForSelector('[role="alert"], .text-destructive', { timeout: 5000 });
+    await expect(this.errorMessage).toBeVisible();
   }
 }

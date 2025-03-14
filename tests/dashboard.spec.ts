@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { DashboardPage } from '../pages/DashboardPage';
 import { Auth } from '../utils/auth';
 
 // This test file demonstrates how to use storage state for authentication
@@ -13,20 +14,22 @@ test.beforeAll(async ({ browser }) => {
   }
 
   // Create a new browser context
+  // Launch a new browser instance
+  // const browser = await browser.chromium.launch();
   const context = await browser.newContext();
 
   // Get test credentials
   const { username, password } = Auth.getTestCredentials();
 
   // Setup authentication state and save it to a file
-  await Auth.setupAuthState(context, username, password, './auth.json');
+  await Auth.setupAuthState(context, username, password, './auth');
 
   // Close the context
   await context.close();
 });
 
 // Use the saved authentication state for all tests in this file
-test.use({ storageState: './auth.json' });
+test.use({ storageState: './auth' });
 
 test.describe('Dashboard Tests', () => {
   test.beforeEach(async ({ page }) => {
@@ -50,11 +53,12 @@ test.describe('Dashboard Tests', () => {
   });
 
   test('should logout successfully', async ({ page }) => {
-    // Click logout button
-    await page.getByRole('button', { name: 'Logout' }).click();
-
-    // Verify we're redirected to login page
-    await expect(page).toHaveURL(/login/);
-    await expect(page.getByText('Welcome back')).toBeVisible();
+    const dashboardPage = new DashboardPage(page);
+  
+    // Perform logout action
+    await dashboardPage.logout();
+  
+    // Verify that user is redirected to login page
+    await dashboardPage.verifyLoggedOut();
   });
 });

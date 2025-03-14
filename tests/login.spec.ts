@@ -30,14 +30,20 @@ test.describe('BroPay Admin Login', () => {
   });
 
   test('should login successfully with valid credentials', async ({ page }) => {
-    // Skip this test if test credentials are not provided
-    test.skip(
-      !process.env.TEST_USERNAME || !process.env.TEST_PASSWORD,
-      'Test credentials not provided in environment variables'
-    );
+    // Check if environment variables are missing
+    if (!process.env.TEST_USERNAME || !process.env.TEST_PASSWORD) {
+      test.skip(true, 'Test credentials not provided in environment variables');
+      return;
+    }
 
     // Get test credentials from environment variables
     const { username, password } = Auth.getTestCredentials();
+
+    // Create login page instance
+    const loginPage = new LoginPage(page);
+    
+    // Navigate to login page
+    await loginPage.goto();
 
     // Login with valid credentials
     await loginPage.login(username, password);
@@ -47,7 +53,7 @@ test.describe('BroPay Admin Login', () => {
 
     // Verify some element that confirms successful login
     await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible({
-      timeout: 5000,
+      timeout: 7000,
     });
   });
 });

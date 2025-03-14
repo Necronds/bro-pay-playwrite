@@ -27,7 +27,7 @@ export class Auth {
     context: BrowserContext,
     username: string,
     password: string,
-    authFile: string = './auth.json'
+    authFile: string = './auth'
   ): Promise<void> {
     const page = await context.newPage();
 
@@ -51,8 +51,8 @@ export class Auth {
    */
   static getTestCredentials(): { username: string; password: string } {
     return {
-      username: process.env.TEST_USERNAME || 'test_user',
-      password: process.env.TEST_PASSWORD || 'test_password',
+      username: process.env.TEST_USERNAME || 'anchan-admin',
+      password: process.env.TEST_PASSWORD || 'Password@123!',
     };
   }
 }

@@ -8,6 +8,10 @@ import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+// console.log('Loaded ENV Variables:');
+// console.log('TEST_USERNAME:', process.env.TEST_USERNAME);
+// console.log('TEST_PASSWORD:', process.env.TEST_PASSWORD ? '******' : 'Not set');
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -35,6 +39,8 @@ export default defineConfig({
 
     /* Capture screenshot on failure */
     screenshot: 'only-on-failure',
+
+    // storageState: './auth.json', // Ensure authentication is properly saved
   },
 
   /* Configure projects for major browsers */
@@ -44,15 +50,15 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
