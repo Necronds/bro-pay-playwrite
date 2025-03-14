@@ -21,9 +21,9 @@ export class UserPage {
     this.page = page;
 
     // Initialize locators
-    this.usernameInput = page.locator('input[name="username"]');
-    this.passwordInput = page.locator('input[name="password"]');
-    this.nameInput = page.locator('input[name="name"]');
+    this.usernameInput = page.getByPlaceholder('johndoe');
+    this.passwordInput = page.getByPlaceholder('Password');
+    this.nameInput = page.getByPlaceholder('John Doe');
     this.createUserButton = page.getByRole('button', { name: 'Create User' });
     this.createSubmitButton = page.getByRole('button', { name: 'Create User' });
     this.usernameErrorMessage = page.getByText('Username must be at least 3 characters');
