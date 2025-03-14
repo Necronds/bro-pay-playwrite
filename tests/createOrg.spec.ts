@@ -18,14 +18,14 @@ test.beforeAll(async ({ playwright }) => {
   const { username, password } = Auth.getTestCredentials();
 
   // Setup authentication state
-  await Auth.setupAuthState(context, username, password, './auth');
+  await Auth.setupAuthState(context, username, password, './auth.json');
 
   // Close browser after authentication setup
   await browser.close();
 });
 
 // Use the saved authentication state for all tests
-test.use({ storageState: './auth' });
+test.use({ storageState: './auth.json' });
 
 test.describe('Create New Organization', () => {
   test.beforeEach(async ({ page }) => {

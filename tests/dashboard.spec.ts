@@ -22,14 +22,14 @@ test.beforeAll(async ({ browser }) => {
   const { username, password } = Auth.getTestCredentials();
 
   // Setup authentication state and save it to a file
-  await Auth.setupAuthState(context, username, password, './auth');
+  await Auth.setupAuthState(context, username, password, './auth.json');
 
   // Close the context
   await context.close();
 });
 
 // Use the saved authentication state for all tests in this file
-test.use({ storageState: './auth' });
+test.use({ storageState: './auth.json' });
 
 test.describe('Dashboard Tests', () => {
   test.beforeEach(async ({ page }) => {

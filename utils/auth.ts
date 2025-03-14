@@ -27,7 +27,7 @@ export class Auth {
     context: BrowserContext,
     username: string,
     password: string,
-    authFile: string = './auth'
+    authFile: string = './auth.json'
   ): Promise<void> {
     const page = await context.newPage();
 
