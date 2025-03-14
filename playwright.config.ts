@@ -6,7 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 import dotenv from 'dotenv';
 import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({ path: path.resolve(__dirname, '.env.example') });
 
 // console.log('Loaded ENV Variables:');
 // console.log('TEST_USERNAME:', process.env.TEST_USERNAME);
