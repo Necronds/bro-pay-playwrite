@@ -51,8 +51,8 @@ export class Auth {
    */
   static getTestCredentials(): { username: string; password: string } {
     return {
-      username: process.env.TEST_USERNAME || 'test_user',
-      password: process.env.TEST_PASSWORD || 'test_password',
+      username: process.env.TEST_USERNAME || 'mon-admin',
+      password: process.env.TEST_PASSWORD || 'Password@123!',
     };
   }
 }
